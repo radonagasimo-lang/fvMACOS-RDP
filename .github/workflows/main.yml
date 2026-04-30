@@ -1,4 +1,4 @@
-name: macOS
+name: macOS-Tailscale
 on: 
   workflow_dispatch:
 defaults:
@@ -9,12 +9,19 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setting the Environment Up.
-      env:
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-      run: source setup.sh "Aeroniscoolmc2" "" "$NGROK_AUTH_TOKEN"
-    - name: ngrok is now listening to VNC connections on...
-      run: curl --silent http://127.0.0.1:4040/api/tunnels | jq '.tunnels[0].public_url'
-    - name: Setup tmate Session
-      uses: mxschmitt/action-tmate@v2
+      - uses: actions/checkout@v2
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+
+      - name: Setting up the Mac
+        run: source setup.sh "Aeroniscoolmc2" "" "TAILSCALE_IS_ACTIVE"
+
+      - name: Show Tailscale IP
+        run: tailscale ip -4
+
+      - name: Keep Alive
+        run: sleep 21600 # This keeps the Mac running for 6 hours
+        
