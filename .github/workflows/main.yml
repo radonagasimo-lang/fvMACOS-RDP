@@ -14,14 +14,14 @@ jobs:
       - name: Connect to Tailscale
         uses: tailscale/github-action@v2
         with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          # This matches your screenshot exactly
+          authkey: ${{ secrets.TAILSCALE_AUTH_KEY }}
 
       - name: Setting up the Mac
-        run: source setup.sh "Aeroniscoolmc2" "" "TAILSCALE_IS_ACTIVE"
+        run: source setup.sh "Aeroniscoolmc2" ""
 
       - name: Show Tailscale IP
         run: tailscale ip -4
 
       - name: Keep Alive
-        run: sleep 21600 # This keeps the Mac running for 6 hours
-        
+        run: sleep 21600
