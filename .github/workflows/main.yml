@@ -1,9 +1,6 @@
 name: macOS-Tailscale
 on: 
   workflow_dispatch:
-defaults:
-  run:
-    shell: bash
 
 jobs:
   build:
@@ -11,13 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v2
-        with:
-          # This matches your screenshot exactly
-          authkey: ${{ secrets.TAILSCALE_AUTH_KEY }}
+      - name: Install & Connect Tailscale
+        run: |
+          brew install tailscale
+          sudo tailscaled install-system-daemon
+          sudo tailscale up --authkey ${{ secrets.TAILSCALE_AUTH_KEY }} --hostname=Aeron-Mac
 
-      - name: Setting up the Mac
+      - name: Setting up the Mac Account
         run: source setup.sh "Aeroniscoolmc2" ""
 
       - name: Show Tailscale IP
