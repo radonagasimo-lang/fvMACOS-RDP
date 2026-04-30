@@ -14,5 +14,8 @@ sudo dscl . -append /Groups/admin GroupMembership $USER_NAME
 
 # Start VNC
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
+# Force the Mac to recognize a virtual display
+sudo defaults write /Library/Preferences/com.apple.windowserver.plist DisplayResolutionEnabled -bool true
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -restart -agent
 
 echo "Mac is ready on your Tailnet!"
