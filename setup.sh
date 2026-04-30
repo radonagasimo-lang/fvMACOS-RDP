@@ -1,6 +1,6 @@
 #!/bin/bash
-USER_NAME=$1
-PASSWORD=$2
+USER_NAME=Aeroniscoolmc2
+PASSWORD=
 
 # Create your account
 sudo dscl . -create /Users/$USER_NAME
