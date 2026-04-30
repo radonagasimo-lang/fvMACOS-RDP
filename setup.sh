@@ -1,9 +1,8 @@
 #!/bin/bash
-USER_NAME=Aeroniscoolmc2
-PASSWORD=
-NGROK_TOKEN=$3
+USER_NAME=$1
+PASSWORD=$2
 
-# Create the account
+# Create your account
 sudo dscl . -create /Users/$USER_NAME
 sudo dscl . -create /Users/$USER_NAME UserShell /bin/bash
 sudo dscl . -create /Users/$USER_NAME RealName "$USER_NAME"
@@ -16,10 +15,4 @@ sudo dscl . -append /Groups/admin GroupMembership $USER_NAME
 # Start VNC
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
 
-# Start Ngrok
-brew install --cask ngrok
-ngrok authtoken $NGROK_TOKEN
-ngrok tcp 5900 --log=stdout > /dev/null &
-
-echo "Setup finished for $USER_NAME!"
-
+echo "Mac is ready on your Tailnet!"
